@@ -2,6 +2,7 @@ import React from 'react'
 import intro from '../Assets/study.svg'
 import { Link } from 'react-router'
 import logo from '../Assets/logo.svg'
+
 const Home = () => {
 	return (
 		<div className='home-bg'>
