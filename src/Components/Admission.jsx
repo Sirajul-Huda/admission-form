@@ -6,36 +6,241 @@ const AdmissionForm = () => {
 	const [formData, setFormData] = useState({});
 
 	const institutions = [
-		{ id: 31, name: "School of Tahfizul Quran" },
-		{ id: 32, name: "Sample Institution 2" },
-		{ id: 33, name: "Sample Institution 3" }
+		{
+			"id": 3,
+			"name": "rfrt"
+		},
+		{
+			"id": 7,
+			"name": "Thazkiyathul Anam Educational Complex, Shivapuram"
+		},
+		{
+			"id": 9,
+			"name": "Sirajul Huda Arts College Test"
+		},
+		{
+			"id": 14,
+			"name": "College of Integrated Studies"
+		},
+		{
+			"id": 15,
+			"name": "Marrkazul Huda College of Integrated Studies, Irungannur"
+		},
+		{
+			"id": 16,
+			"name": "Darul Huda Educational Complex Nadapuram"
+		},
+		{
+			"id": 18,
+			"name": "Sirajul Huda College of Integrated Studies, Thuvakkunnu"
+		},
+		{
+			"id": 24,
+			"name": "test"
+		},
+		{
+			"id": 36,
+			"name": "Samyukta Mahall Committee Office"
+		},
+		{
+			"id": 42,
+			"name": "Hayat Professionals' Abode"
+		},
+		{
+			"id": 23,
+			"name": "Ecole International Prep - School"
+		},
+		{
+			"id": 27,
+			"name": "Q - Garden"
+		},
+		{
+			"id": 11,
+			"name": "Darul Huda English Medium School Nadapuram"
+		},
+		{
+			"id": 6,
+			"name": "Sirajul Huda Women's Academy, Kainatty"
+		},
+		{
+			"id": 34,
+			"name": "Sirajul Huda Central Office"
+		},
+		{
+			"id": 8,
+			"name": "College of Quran and Integrated Studies"
+		},
+		{
+			"id": 33,
+			"name": "Sirajul Huda College of Sharia and Arabic"
+		},
+		{
+			"id": 30,
+			"name": "Sirajul Huda School of Excellence Parakkadavu"
+		},
+		{
+			"id": 4,
+			"name": "Sirajul Huda English Medium School, Perambra"
+		},
+		{
+			"id": 28,
+			"name": "Sirajul Huda English Medium School Vatakara"
+		},
+		{
+			"id": 20,
+			"name": "Darul Huda Arts & Science College Nadapuram"
+		},
+		{
+			"id": 35,
+			"name": "Mishkathul Huda Educational Complex, Maniyur"
+		},
+		{
+			"id": 21,
+			"name": "College of Science and Integrated Studies"
+		},
+		{
+			"id": 5,
+			"name": "Sirajul Huda Women's Academy, Nadapuram"
+		},
+		{
+			"id": 45,
+			"name": "Darul Huda Educational Complex Nadapuram"
+		},
+		{
+			"id": 44,
+			"name": "Smart Charitable Trust, Wayanad"
+		},
+		{
+			"id": 19,
+			"name": "Sirajul Huda Orphan Care"
+		},
+		{
+			"id": 43,
+			"name": "Sirajul Huda Hiflul Quran College, Nadapuram"
+		},
+		{
+			"id": 25,
+			"name": "Jamia Sirajul Huda"
+		},
+		{
+			"id": 32,
+			"name": "Sirajul Huda Kuttiady"
+		},
+		{
+			"id": 31,
+			"name": "School of Tahfizul Quran"
+		},
+		{
+			"id": 41,
+			"name": "Womens Academy"
+		},
+		{
+			"id": 10,
+			"name": "Sirajul Huda Institute of Management Studies"
+		},
+		{
+			"id": 46,
+			"name": "Darul Huda Higher Secondary School Nadapuram"
+		},
+		{
+			"id": 26,
+			"name": "Sirajul Huda English Medium School Test"
+		},
+		{
+			"id": 38,
+			"name": "Sirajul Huda English Medium School Peringathur"
+		},
+		{
+			"id": 12,
+			"name": "Sirajul Huda English Medium School Kuttiadi"
+		},
+		{
+			"id": 37,
+			"name": "Sirajul Huda English Medium School Meppayur"
+		},
+		{
+			"id": 29,
+			"name": "Sirajul Huda Educational Complex"
+		},
+		{
+			"id": 17,
+			"name": "Sirajul Huda Women's Academy, Parakkadavu"
+		},
+		{
+			"id": 40,
+			"name": "Sirajul Huda School of Excellence Kuttiady"
+		},
+		{
+			"id": 39,
+			"name": "College of Integrated Studies, Kuttiady"
+		},
+		{
+			"id": 13,
+			"name": "Sirajul Huda Women's Academy, Kuttiadi"
+		},
+		{
+			"id": 22,
+			"name": "Darul Hudda English Medium School Parakkadavu"
+		},
+		{
+			"id": 47,
+			"name": "Darul Huda Educational Complex, Nadapuram"
+		},
+		{
+			"id": 49,
+			"name": "Ecole International Secondary School"
+		},
+		{
+			"id": 48,
+			"name": "Sirajul Huda Hiflul Quran College Nadapuram"
+		}
 	];
 
-	const formFields = [
-		{ name: 'mobile', title: 'Mobile', type: 'text', required: true },
-		{ name: 'name', title: 'Full Name', type: 'text', required: true },
-		{ name: 'email', title: 'Email', type: 'email', required: true },
-		{ name: 'dob', title: 'Date of Birth', type: 'date', required: true },
-		{ name: 'house_name', title: 'House Name', type: 'text', required: true },
-		{ name: 'post', title: 'Post', type: 'text', required: true },
-		{ name: 'pin_code', title: 'PIN Code', type: 'text', required: true },
-		{ name: 'panchayat', title: 'Panchayat', type: 'text', required: true },
-		{ name: 'mother_name', title: "Mother's Name", type: 'text', required: true },
-		{ name: 'aadhaar', title: 'Aadhaar Number', type: 'text', required: false },
-		{ name: 'guardian', title: 'Guardian Name', type: 'text', required: false },
-		{ name: 'relationship', title: 'Relationship with Guardian', type: 'text', required: false },
-		{ name: 'father_occupation', title: 'Job Title', type: 'text', required: false },
-		{ name: 'father_income', title: 'Annual Income', type: 'text', required: false },
-		{ name: 'father_job_country', title: 'Country of Job', type: 'text', required: false },
-		{ name: 'last_school', title: 'Last School', type: 'text', required: false },
-		{ name: 'moral_education', title: 'Last Madrassa', type: 'text', required: false },
-		{ name: 'id_mark', title: 'Identification Mark', type: 'text', required: false }
-	];
+	const fieldsDict = { name: '', title: '', type: '', required: false }
 
-	const handleInstitutionSelect = (e) => {
-		setSelectedInstitution(e.target.value);
+	const [formFields, setFormFields] = useState([]);
+
+	const handleInstitutionSelect = async (e) => {
+		console.log('Selected institution:', e.target.value);
+		const selectedValue = e.target.value;
+		if (selectedValue) {
+			setSelectedInstitution(e.target.value);
+		}
+		else {
+			console.log("Please select an institution");
+		}
+		try {
+			console.log("here")
+			const response = await fetch('https://api.sirajulhuda.com/api/v1/erp/admission-application-config/22', {
+				method: "GET",
+				headers: {
+					"Content-Type": "application/json"
+				},
+			});
+			console.log("here2")
+			const res = await response.json();
+			const institutionFormDetails = res["data"];
+			const institutionFormConfigs = institutionFormDetails['config'];
+			const fieldtypes = ["str", "standard", "school", "ration_card_type", "yes_no", "local_body"];
+
+			const updatedFormFields = institutionFormConfigs.filter(config => config.visibility === true).map(config => ({
+				...fieldsDict,
+				name: config.name,
+				title: config.title,
+				type:  fieldtypes.includes(config.type) ? 'text' 	: config.type === 'int' ? 'number' : config.type,
+
+				required: config.required
+			}));
+			setFormFields(updatedFormFields);
+			console.log("InstitutionFormDetails:", updatedFormFields);
+
+		}
+		catch (error) {
+			console.error("Error d:", error);
+			alert("Something went wrong. Please try again.");
+		}
 		setShowForm(true);
-	};
+	}
 
 	const handleBack = () => {
 		setShowForm(false);
@@ -57,6 +262,7 @@ const AdmissionForm = () => {
 			<div className="form-container">
 				<div className="form-wrapper">
 					<div className="form-card">
+
 						<h2 className="form-title">Application for Admission</h2>
 
 						{!showForm ? (
@@ -89,29 +295,33 @@ const AdmissionForm = () => {
 										← Back
 									</button>
 									<p className="selected-institution">
-										Selected: {institutions.find(i => i.id === Number(selectedInstitution))?.name}
+										Selected: {institutions.find(i => i.id === Number(selectedInstitution))?.id}
 									</p>
 								</div>
 
 								<div className="form-fields">
-									{formFields.map((field) => (
-										<div key={field.name} className="form-field">
-											<label htmlFor={field.name} className="field-label">
-												{field.title}
-												{field.required && <span className="required">*</span>}
-											</label>
-											<input
-												type={field.type}
-												id={field.name}
-												name={field.name}
-												required={field.required}
-												placeholder={`Enter ${field.title}`}
-												value={formData[field.name] || ''}
-												onChange={handleChange}
-												className="field-input"
-											/>
-										</div>
-									))}
+									{formFields.length === 0 ? (
+										<p className="no-fields">loading</p>
+									) : (
+										formFields.map((field) => (
+											<div key={field.name} className="form-field">
+												<label htmlFor={field.name} className="field-label">
+													{field.title}
+													{field.required && <span className="required">*</span>}
+												</label>
+												<input
+													type={field.type}
+													id={field.name}
+													name={field.name}
+													required={field.required}
+													placeholder={`Enter ${field.title}`}
+													value={formData[field.name] || ''}
+													onChange={handleChange}
+													className="field-input"
+												/>
+											</div>
+										))
+									)}
 								</div>
 
 								<button type="submit" className="submit-button">
@@ -121,11 +331,8 @@ const AdmissionForm = () => {
 						)}
 					</div>
 				</div>
-				
 			</div>
 		</div>
-
 	);
-};
-
+}
 export default AdmissionForm;
