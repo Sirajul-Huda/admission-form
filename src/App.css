@@ -202,6 +202,20 @@ body{
   color: #666;
   margin-bottom: 0px !important;
 }
+.selected-institutions {
+  color: #ffffff;
+  margin-bottom: 9px !important;
+  font-weight: 400;
+}
+.box-items{
+  background-color: #065b83c9;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 45px;
+  margin-top: 30px;
+}
+
+
 
 .form-fields {
   display: grid;
@@ -303,4 +317,10 @@ body{
     margin: auto;
     margin-bottom: 20px;
   }
+  .selected-institutions {
+    color: #ffffff;
+    margin-bottom: 17px !important;
+    font-weight: 400;
+    font-size: 14px;
+}
 }

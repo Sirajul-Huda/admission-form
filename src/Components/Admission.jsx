@@ -31,7 +31,7 @@ const AdmissionForm = () => {
 	useEffect(() => {
 		const fetchInstitutions = async () => {
 			try {
-				const response = await fetch('https://web-dev-2c5e.up.railway.app/api/v1/erp/admission/admission-open/institutions');
+				const response = await fetch('https://api.sirajulhuda.com/api/v1/erp/admission/admission-open/institutions');
 				const result = await response.json();
 				if (result.status === 200) {
 					setInstitutions(result.data);
@@ -166,7 +166,7 @@ const AdmissionForm = () => {
 		};
 
 		try {
-			const url = 'https://web-dev-2c5e.up.railway.app/api/v1/erp/admission/application/create';
+			const url = 'https://api.sirajulhuda.com/api/v1/erp/admission/application/create';
 			const response = await fetch(url, {
 				method: "POST",
 				headers: {
@@ -261,6 +261,13 @@ const AdmissionForm = () => {
 					<div className="form-card">
 						<img src={logo} className='logo-img' alt="" />
 						<h2 className="form-title">Application for Admission</h2>
+						<div className="box-items">
+						<p className="selected-institutions">1. ഇംഗ്ലീഷിലെ വലിയ  അക്ഷരത്തിൽ മാത്രമേ ഫോം പൂരിപ്പിക്കാവൂ</p>
+						<p className="selected-institutions">2. ഫോമിൽ ചുവപ്പ് കളറിൽ മാർക്ക് ചെയ്തിട്ടുള്ളവ നിർബന്ധമായും പൂരിപ്പിക്കേണ്ടതാണ്</p>
+						<p className="selected-institutions">3. ക്ലാസ്, ഫോൺ നമ്പറുകൾ എന്നിവ തെറ്റില്ലെന്ന് ഉറപ്പ് വരുത്തുക. പിന്നീട് തിരുത്താനാവില്ല</p>
+						<p className="selected-institutions">4. ഫോം പൂർണമായും പൂരിപ്പിച്ച ശേഷം സബ്മിറ്റ് ബട്ടൺ അമർത്തുക</p>
+						
+						</div>
 						
 						{/* Alert Message */}
 						<div style={alertStyle(alert.type)}>
