@@ -31,7 +31,7 @@ const AdmissionForm = () => {
         border: `1px solid ${type === 'error' ? '#ef9a9a' : '#a5d6a7'}`
     });
 
-		
+
 	// Institution and Standards Fetching
 	useEffect(() => {
 		const fetchInstitutions = async () => {
@@ -261,9 +261,9 @@ return (
 										) : (
 												<form onSubmit={handleSubmit} className="admission-form">
 														<div className="form-header">
-																<button type="button" onClick={handleBack} className="back-button">
+																{/* <button type="button" onClick={handleBack} className="back-button">
 																		← Back
-																</button>
+																</button> */}
 																<p className="selected-institution">
 																		Institution: {institutions.find(i => i.id === Number(selectedInstitution))?.name}
 																</p>
