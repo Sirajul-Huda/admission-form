@@ -86,8 +86,17 @@ body{
   display: table;
   margin-bottom: 15px;
 }
-
-
+.success-img{
+  width: 150px;
+  margin: auto;
+  display: table;
+  padding-bottom: 40px;
+}
+.tx{
+  text-align: center;
+  padding-bottom: 20px;
+  color: #245e80;
+}
 
 
 
@@ -269,5 +278,29 @@ body{
   .form-wrapper {
     max-width: 90%;
     margin: 0 auto;
+  }
+  .form-card {
+    padding: 10px 20px 30px 20px;
+}
+.logo-img {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  }
+  .form-title {
+    font-size: 20px;
+    padding-bottom: 19px;
+    font-weight: bold;
+  }
+  .form-header {
+    display: unset
+;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .back-button {
+    margin: auto;
+    margin-bottom: 20px;
   }
 }

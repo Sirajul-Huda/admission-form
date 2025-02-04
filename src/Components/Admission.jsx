@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import logo from '../Assets/logo.svg'
+import { useNavigate } from 'react-router-dom';
+import logo from '../Assets/logo.svg';
 
 const AdmissionForm = () => {
+	const navigate = useNavigate();
 	const [selectedInstitution, setSelectedInstitution] = useState(null);
 	const [showForm, setShowForm] = useState(false);
 	const [formData, setFormData] = useState({});
@@ -10,11 +12,26 @@ const AdmissionForm = () => {
 	const [loading, setLoading] = useState(true);
 	const [standards, setStandards] = useState([]);
 	const [selectedStandard, setSelectedStandard] = useState('');
+	const [alert, setAlert] = useState({ message: '', type: '' });
+
+	// CSS styles for the alert
+	const alertStyle = (type) => ({
+		backgroundColor: type === 'error' ? '#ffebee' : '#e8f5e9',
+		color: type === 'error' ? '#c62828' : '#2e7d32',
+		padding: '12px',
+		borderRadius: '4px',
+		marginBottom: '20px',
+		fontSize: '14px',
+		textAlign: 'center',
+		fontWeight: '500',
+		display: alert.message ? 'block' : 'none',
+		border: `1px solid ${type === 'error' ? '#ef9a9a' : '#a5d6a7'}`
+	});
 
 	useEffect(() => {
 		const fetchInstitutions = async () => {
 			try {
-				const response = await fetch('https://06fa-117-242-79-139.ngrok-free.app/api/v1/erp/admission/admission-open/institutions');
+				const response = await fetch('https://web-dev-2c5e.up.railway.app/api/v1/erp/admission/admission-open/institutions');
 				const result = await response.json();
 				if (result.status === 200) {
 					setInstitutions(result.data);
@@ -29,6 +46,15 @@ const AdmissionForm = () => {
 		fetchInstitutions();
 	}, []);
 
+	const resetForm = () => {
+		setFormData({});
+		setSelectedStandard('');
+		setSelectedInstitution(null);
+		setShowForm(false);
+		setFormFields([]);
+		setAlert({ message: '', type: '' });
+	};
+
 	const handleStandards = async (institution_id) => {
 		try {
 			const response = await fetch(`https://api.sirajulhuda.com/api/v1/erp/school/standards/list/${institution_id}`, {
@@ -41,7 +67,7 @@ const AdmissionForm = () => {
 			setStandards(result.data);
 		} catch (error) {
 			console.error("Error fetching standards:", error);
-			alert("Something went wrong. Please try again.");
+			setAlert({ message: "Error fetching standards. Please try again.", type: 'error' });
 		}
 	};
 
@@ -113,17 +139,14 @@ const AdmissionForm = () => {
 				setFormData(initialFormData);
 			} catch (error) {
 				console.error("Error fetching form config:", error);
-				alert("Something went wrong. Please try again.");
+				setAlert({ message: "Error loading form configuration. Please try again.", type: 'error' });
 			}
 		}
 		setShowForm(true);
 	};
 
 	const handleBack = () => {
-		setShowForm(false);
-		setSelectedInstitution('');
-		setFormData({});
-		setSelectedStandard('');
+		resetForm();
 	};
 
 	const handleChange = (e) => {
@@ -143,8 +166,6 @@ const AdmissionForm = () => {
 		};
 
 		try {
-			console.log(typeof submissionData.institution_id);
-
 			const url = 'https://web-dev-2c5e.up.railway.app/api/v1/erp/admission/application/create';
 			const response = await fetch(url, {
 				method: "POST",
@@ -152,27 +173,14 @@ const AdmissionForm = () => {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({
-					// 'id': null,
-					// 'year_id': null,
-
 					'institution_id': submissionData.institution_id === null ? null : Number(submissionData.institution_id),
 					'standard_id': submissionData.standard === null ? null : Number(submissionData.standard),
-
-					// 'sem_id': submissionData.sem_id === null ? null : submissionData.sem_id,
-					// 'batch_id': submissionData.batch_id === null ? null : submissionData.batch_id,
-					// 'course_id': submissionData.course_id === null ? null : submissionData.course_id,
-					// 'type': submissionData.type === null ? null : submissionData.type,
-					// 'fb_id': submissionData.fb_id === null ? null : submissionData.fb_id,
-					// 'applied_at': submissionData.applied_at === null ? null : submissionData.applied_at, 
-					// 'updated_at': submissionData.updated_at === null ? null : submissionData.updated_at,
 					'mobile': submissionData.mobile,
 					'whats_app': submissionData.whats_app === null ? null : submissionData.whats_app,
 					'email': submissionData.email === null ? null : submissionData.email,
 					'name': submissionData.name === null ? null : submissionData.name,
 					'full_initial': submissionData.full_initial === null ? null : submissionData.full_initial,
-					// 'dob': submissionData.dob === null ? null : submissionData.dob,
 					'dob': submissionData.dob ? new Date(submissionData.dob).toISOString().slice(0, 19).replace('T', ' ') : null,
-					// 'dob':	null ,
 					'word_dob': submissionData.word_dob === null ? null : submissionData.word_dob,
 					'gender': submissionData.gender === null ? null : submissionData.gender,
 					'blood_group': submissionData.blood_group === null ? null : submissionData.blood_group,
@@ -192,9 +200,7 @@ const AdmissionForm = () => {
 					'district': submissionData.district === null ? null : submissionData.district,
 					'state': submissionData.state === null ? null : submissionData.state,
 					'nationality': submissionData.nationality === null ? null : submissionData.nationality,
-					// 'vaccination_date': submissionData.vaccination_date === null ? null : submissionData.vaccination_date,
-					// 'is_single_girl': submissionData.is_single_girl === null ? null : submissionData.is_single_girl,
-					'is_single_girl': true ,
+					'is_single_girl': true,
 					'is_disabled': submissionData.is_disabled === null ? null : submissionData.is_disabled,
 					'father_name': submissionData.father_name === null ? null : submissionData.father_name,
 					'father_phone': submissionData.father_phone === null ? null : submissionData.father_phone,
@@ -211,39 +217,42 @@ const AdmissionForm = () => {
 					'guardian': submissionData.guardian === null ? null : submissionData.guardian,
 					'relationship': submissionData.relationship === null ? null : submissionData.relationship,
 					'guardian_address': submissionData.guardian_address === null ? null : submissionData.guardian_address,
-					// 'fb_year_id': submissionData.fb_year_id === null ? null : submissionData.fb_year_id,
-					// 'fb_school_id': submissionData.fb_school_id === null ? null : submissionData.fb_school_id,
-					// 'fb_cls_id': submissionData.fb_cls_id === null ? null : submissionData.fb_cls_id,
-
 					'last_school': submissionData.last_school === null ? null : submissionData.last_school,
 					'last_school_affiliation': submissionData.last_school_affiliation === null ? null : submissionData.last_school_affiliation,
 					'tc_no': submissionData.tc_no === null ? null : submissionData.tc_no,
 					'tc_issue_date': submissionData.tc_issue_date === null ? null : submissionData.tc_issue_date,
-					// 'last_result': submissionData.last_result === null ? null : submissionData.last_result,
 					'id_mark': submissionData.id_mark === null ? null : submissionData.id_mark,
-					// 'birth_url': submissionData.birth_url === null ? null : submissionData.birth_url,
-					// 'ration_url': submissionData.ration_url === null ? null : submissionData.ration_url,
-					// 'aadhaar_url': submissionData.aadhaar_url === null ? null : submissionData.aadhaar_url,
-					// 'ml_name': submissionData.ml_name === null ? null : submissionData.ml_name,
-					// 'applied_by': submissionData.applied_by === null ? null : submissionData.applied_by,
-					// 'img_url': submissionData.img_url === null ? null : submissionData.img_url,
-					// 'panchayat': submissionData.panchayat === null ? null : submissionData.panchayat,
 					'father_job_title': submissionData.father_job_title === null ? null : submissionData.father_job_title,
-				
-				
-		
-
 				}),
 			});
 
-			console.log('Form submitted with the following data:', submissionData);
+			const result = await response.json();
+			
+			if (result.detail === "application existed") {
+				setAlert({ message: 'Application already exists!', type: 'error' });
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+			} else {
+				setAlert({ 
+					message: 'Application submitted successfully! Redirecting to home page...', 
+					type: 'success' 
+				});
+				window.scrollTo({ top: 0, behavior: 'smooth' });
+				
+				// Clear all fields
+				resetForm();
+				
+				// Redirect after 4 seconds
+				setTimeout(() => {
+					navigate('/success'); // Replace '/' with your home page path
+				}, 10);
+			}
+
 		} catch (error) {
 			console.error("Error submitting form:", error);
+			setAlert({ message: 'Error submitting application. Please try again.', type: 'error' });
+			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	};
-
-
-
 
 	return (
 		<div className="admission-page">
@@ -252,6 +261,11 @@ const AdmissionForm = () => {
 					<div className="form-card">
 						<img src={logo} className='logo-img' alt="" />
 						<h2 className="form-title">Application for Admission</h2>
+						
+						{/* Alert Message */}
+						<div style={alertStyle(alert.type)}>
+							{alert.message}
+						</div>
 
 						{!showForm ? (
 							<div className="institution-select">
@@ -263,7 +277,7 @@ const AdmissionForm = () => {
 								) : (
 									<select
 										id="institution"
-										value={selectedInstitution}
+										value={selectedInstitution || ''}
 										onChange={handleInstitutionSelect}
 										className="select-input"
 									>
@@ -306,46 +320,42 @@ const AdmissionForm = () => {
 											</option>
 										))}
 									</select>
-								</div>
+								</div>	
 
 								<div className="form-fields">
-									{formFields.length === 0 ? (
-										<p className="no-fields">Loading...</p>
-									) : (
-										formFields.map((field) => (
-											<div key={field.name} className="form-field">
-												<label htmlFor={field.name} className="field-label">
-													{field.title}
-													{field.required && <span className="required">*</span>}
-												</label>
-												{field.isYesNo ? (
-													<select
-														id={field.name}
-														name={field.name}
-														value={formData[field.name] || ''}
-														onChange={handleChange}
-														required={field.required}
-														className="select-input"
-													>
-														<option value="">Select Yes/No</option>
-														<option value="yes">Yes</option>
-														<option value="no">No</option>
-													</select>
-												) : (
-													<input
-														type={field.type}
-														id={field.name}
-														name={field.name}
-														required={field.required}
-														value={formData[field.name] || ''}
-														onChange={handleChange}
-														className="field-input"
-														placeholder={`Enter ${field.title}`}
-													/>
-												)}
-											</div>
-										))
-									)}
+									{formFields.map((field) => (
+										<div key={field.name} className="form-field">
+											<label htmlFor={field.name} className="field-label">
+												{field.title}
+												{field.required && <span className="required">*</span>}
+											</label>
+											{field.isYesNo ? (
+												<select
+													id={field.name}
+													name={field.name}
+													value={formData[field.name] || ''}
+													onChange={handleChange}
+													required={field.required}
+													className="select-input"
+												>
+													<option value="">Select Yes/No</option>
+													<option value="yes">Yes</option>
+													<option value="no">No</option>
+												</select>
+											) : (
+												<input
+													type={field.type}
+													id={field.name}
+													name={field.name}
+													required={field.required}
+													value={formData[field.name] || ''}
+													onChange={handleChange}
+													className="field-input"
+													placeholder={`Enter ${field.title}`}
+												/>
+											)}
+										</div>
+									))}
 								</div>
 
 								<button type="submit" className="submit-button">
@@ -361,116 +371,3 @@ const AdmissionForm = () => {
 };
 
 export default AdmissionForm;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// id: Optional[int] = None  
-// year_id: Optional[int] = None  
-// institution_id: Optional[int] = None  
-// standard_id: Optional[int] = None  
-// sem_id: Optional[int] = None  
-// batch_id: Optional[int] = None  
-// course_id: Optional[int] = None  
-// type: Optional[str] = None  
-// fb_id: Optional[str] = None  
-// applied_at: Optional[str] = None  
-// updated_at: Optional[str] = None  
-// mobile: Optional[str] = None  
-// whats_app: Optional[str] = None  
-// email: Optional[str] = None  
-// name: Optional[str] = None  
-// full_initial: Optional[str] = None  
-// dob: Optional[datetime] = None  
-// word_dob: Optional[str] = None  
-// gender: Optional[str] = None  
-// blood_group: Optional[str] = None  
-// religion: Optional[str] = None  
-// caste: Optional[str] = None  
-// aadhaar: Optional[str] = None  
-// mother_tongue: Optional[str] = None  
-// house_name: Optional[str] = None  
-// local_name: Optional[str] = None  
-// local_body: Optional[str] = None  
-// ration_card_type: Optional[str] = None  
-// pin_code: Optional[str] = None  
-// post: Optional[str] = None  
-// place: Optional[str] = None  
-// block: Optional[str] = None  
-// taluk: Optional[str] = None  
-// district: Optional[str] = None  
-// state: Optional[str] = None  
-// nationality: Optional[str] = None  
-// vaccination_date: Optional[datetime] = None  
-// is_single_girl: Optional[bool] = None  
-// is_disabled: Optional[bool] = None  
-// father_name: Optional[str] = None  
-// father_phone: Optional[str] = None  
-// father_income: Optional[str] = None  
-// father_email: Optional[str] = None  
-// father_qualification: Optional[str] = None  
-// father_occupation: Optional[str] = None  
-// mother_name: Optional[str] = None  
-// mother_occupation: Optional[str] = None  
-// mother_email: Optional[str] = None  
-// mother_phone: Optional[str] = None  
-// mother_qualification: Optional[str] = None  
-// mother_income: Optional[str] = None  
-// guardian: Optional[str] = None  
-// relationship: Optional[str] = None  
-// guardian_address: Optional[str] = None  
-// fb_year_id: Optional[str] = None  
-// fb_school_id: Optional[str] = None  
-// fb_cls_id: Optional[str] = None  
-// last_school: Optional[str] = None  
-// last_school_affiliation: Optional[str] = None  
-// tc_no: Optional[str] = None  
-// tc_issue_date: Optional[str] = None  
-// last_result: Optional[str] = None  
-// id_mark: Optional[str] = None  
-// birth_url: Optional[str] = None  
-// ration_url: Optional[str] = None  
-// aadhaar_url: Optional[str] = None  
-// ml_name: Optional[str] = None  
-// applied_by: Optional[str] = None  
-// img_url: Optional[str] = None  
-// panchayat: Optional[str] = None  
-// father_job_title: Optional[str] = None  
-// father_job_country: Optional[str] = None  
-// moral_education: Optional[str] = None  
-// academic_education: Optional[str] = None  
-// nominee_1: Optional[str] = None  
-// nominee_2: Optional[str] = None  
-// has_chronic: Optional[str] = None  
-// created_at: Optional[datetime] = None  
-// status: Optional[str] = None  
-// cap_id: Optional[str] = None  
-// married: Optional[bool] = None  
-// mark: Optional[dict] = None  
-// ssls_mark: Optional[dict] = None  
-// plus_two_mark: Optional[dict] = None  
-// degree_mark: Optional[dict] = None  
-// test_mark: Optional[dict] = None  
-// achievements: Optional[str] = None  
-// ugc_college: Optional[str] = None  
-// course_choice: Optional[str] = None  
-// ielts_choice: Optional[str] = None  
-// diploma_choice: Optional[str] = None  
-// responsible_1: Optional[str] = None  
-// responsible_2: Optional[str] = None  
