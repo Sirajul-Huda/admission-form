@@ -32,35 +32,50 @@ const AdmissionForm = () => {
         border: `1px solid ${type === 'error' ? '#ef9a9a' : '#a5d6a7'}`
     });
 
+
+		const getInstitutionId = () => {
+			const hash = window.location.hash;
+			if (hash.includes('admission?')) {
+					const params = new URLSearchParams(hash.split('?')[1]);
+					return params.get('id');
+			}
+			return null;
+	};
+
+	// Update URL with hash
+	const updateUrlWithHash = (institutionId) => {
+			window.location.hash = `/admission?id=${institutionId}`;
+	};
+
+	
     // Institution and Standards Fetching
-    useEffect(() => {
-        const fetchInstitutions = async () => {
-            try {
-                const response = await fetch('https://api.sirajulhuda.com/api/v1/erp/admission/admission-open/institutions');
-                const result = await response.json();
-                if (result.status === 200) {
-                    setInstitutions(result.data);
+		useEffect(() => {
+			const fetchInstitutions = async () => {
+					try {
+							const response = await fetch('https://api.sirajulhuda.com/api/v1/erp/admission/admission-open/institutions');
+							const result = await response.json();
+							if (result.status === 200) {
+									setInstitutions(result.data);
 
-                    // Check for institution ID in query params
-                    const institutionId = searchParams.get('id');
-                    if (institutionId) {
-                        const selectedInst = result.data.find(inst => inst.id === Number(institutionId));
-                        if (selectedInst) {
-                            setSelectedInstitution(institutionId);
-                            await handleInstitutionSelect({ target: { value: institutionId } });
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error("Error fetching institutions:", error);
-            } finally {
-                setLoading(false);
-            }
-        };
+									// Check for institution ID in hash URL
+									const institutionId = getInstitutionId();
+									if (institutionId) {
+											const selectedInst = result.data.find(inst => inst.id === Number(institutionId));
+											if (selectedInst) {
+													setSelectedInstitution(institutionId);
+													await handleInstitutionSelect({ target: { value: institutionId } });
+											}
+									}
+							}
+					} catch (error) {
+							console.error("Error fetching institutions:", error);
+					} finally {
+							setLoading(false);
+					}
+			};
 
-        fetchInstitutions();
-    }, []);
-
+			fetchInstitutions();
+	}, []);
     // Fetch Standards for Selected Institution
     const handleStandards = async (institution_id) => {
         try {
@@ -78,13 +93,13 @@ const AdmissionForm = () => {
 
     // Handle Institution Selection
     const handleInstitutionSelect = async (e) => {
-        const selectedValue = e.target.value;
-        if (selectedValue) {
+			const selectedValue = e.target.value;
+			if (selectedValue) {
             // Update URL with query parameter
-            setSearchParams({ id: selectedValue });
+            updateUrlWithHash(selectedValue);
             
-            setSelectedInstitution(selectedValue);
-            try {
+						setSelectedInstitution(selectedValue);
+						            try {
                 const response = await fetch(`https://api.sirajulhuda.com/api/v1/erp/admission-application-config/${selectedValue}`, {
                     method: "GET",
                     headers: { "Content-Type": "application/json" },
@@ -133,7 +148,7 @@ const AdmissionForm = () => {
 
                 await handleStandards(selectedValue);
                 setFormData(initialFormData);
-            } catch (error) {
+							} catch (error) {
                 console.error("Error fetching form config:", error);
                 setAlert({ message: "Error loading form configuration. Please try again.", type: 'error' });
             }
@@ -150,6 +165,8 @@ const AdmissionForm = () => {
 			setFormFields([]);
 			setAlert({ message: '', type: '' });
 			setIsSubmitting(false);
+			// Reset URL hash
+			window.location.hash = '/admission';
 	};
 
     // Handle Form Input Changes
@@ -260,10 +277,10 @@ const AdmissionForm = () => {
     };
 
     // Handle Back Navigation
-    const handleBack = () => {
-        setSearchParams({});
-        resetForm();
-    };
+		const handleBack = () => {
+			window.location.hash = '/admission';
+			resetForm();
+	};
 
 
 // Render Component
