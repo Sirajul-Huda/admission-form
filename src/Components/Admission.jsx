@@ -176,8 +176,55 @@ const handleSubmit = async (e) => {
 						headers: { "Content-Type": "application/json" },
 						body: JSON.stringify({
 								'institution_id': submissionData.institution_id === null ? null : Number(submissionData.institution_id),
-								'standard_id': submissionData.standard === null ? null : Number(submissionData.standard),
-								// ... (rest of the submission data mapping remains the same as in original code)
+					'standard_id': submissionData.standard === null ? null : Number(submissionData.standard),
+					'mobile': submissionData.mobile,
+					'whats_app': submissionData.whats_app === null ? null : submissionData.whats_app,
+					'email': submissionData.email === null ? null : submissionData.email,
+					'name': submissionData.name === null ? null : submissionData.name,
+					'full_initial': submissionData.full_initial === null ? null : submissionData.full_initial,
+					'dob': submissionData.dob ? new Date(submissionData.dob).toISOString().slice(0, 19).replace('T', ' ') : null,
+					'word_dob': submissionData.word_dob === null ? null : submissionData.word_dob,
+					'gender': submissionData.gender === null ? null : submissionData.gender,
+					'blood_group': submissionData.blood_group === null ? null : submissionData.blood_group,
+					'religion': submissionData.religion === null ? null : submissionData.religion,
+					'caste': submissionData.caste === null ? null : submissionData.caste,
+					'aadhaar': submissionData.aadhaar === null ? null : submissionData.aadhaar,
+					'mother_tongue': submissionData.mother_tongue === null ? null : submissionData.mother_tongue,
+					'house_name': submissionData.house_name === null ? null : submissionData.house_name,
+					'local_name': submissionData.local_name === null ? null : submissionData.local_name,
+					'local_body': submissionData.local_body === null ? null : submissionData.local_body,
+					'ration_card_type': submissionData.ration_card_type === null ? null : submissionData.ration_card_type,
+					'pin_code': submissionData.pin_code === null ? null : submissionData.pin_code,
+					'post': submissionData.post === null ? null : submissionData.post,
+					'place': submissionData.place === null ? null : submissionData.place,
+					'block': submissionData.block === null ? null : submissionData.block,
+					'taluk': submissionData.taluk === null ? null : submissionData.taluk,
+					'district': submissionData.district === null ? null : submissionData.district,
+					'state': submissionData.state === null ? null : submissionData.state,
+					'nationality': submissionData.nationality === null ? null : submissionData.nationality,
+					'is_single_girl': true,
+					'is_disabled': submissionData.is_disabled === null ? null : submissionData.is_disabled,
+					'father_name': submissionData.father_name === null ? null : submissionData.father_name,
+					'father_phone': submissionData.father_phone === null ? null : submissionData.father_phone,
+					'father_income': submissionData.father_income === null ? null : submissionData.father_income,
+					'father_email': submissionData.father_email === null ? null : submissionData.father_email,
+					'father_qualification': submissionData.father_qualification === null ? null : submissionData.father_qualification,
+					'father_occupation': submissionData.father_occupation === null ? null : submissionData.father_occupation,
+					'mother_name': submissionData.mother_name === null ? null : submissionData.mother_name,
+					'mother_occupation': submissionData.mother_occupation === null ? null : submissionData.mother_occupation,
+					'mother_email': submissionData.mother_email === null ? null : submissionData.mother_email,
+					'mother_phone': submissionData.mother_phone === null ? null : submissionData.mother_phone,
+					'mother_qualification': submissionData.mother_qualification === null ? null : submissionData.mother_qualification,
+					'mother_income': submissionData.mother_income === null ? null : submissionData.mother_income,
+					'guardian': submissionData.guardian === null ? null : submissionData.guardian,
+					'relationship': submissionData.relationship === null ? null : submissionData.relationship,
+					'guardian_address': submissionData.guardian_address === null ? null : submissionData.guardian_address,
+					'last_school': submissionData.last_school === null ? null : submissionData.last_school,
+					'last_school_affiliation': submissionData.last_school_affiliation === null ? null : submissionData.last_school_affiliation,
+					'tc_no': submissionData.tc_no === null ? null : submissionData.tc_no,
+					'tc_issue_date': submissionData.tc_issue_date === null ? null : submissionData.tc_issue_date,
+					'id_mark': submissionData.id_mark === null ? null : submissionData.id_mark,
+					'father_job_title': submissionData.father_job_title === null ? null : submissionData.father_job_title,
 						}),
 				});
 
@@ -197,7 +244,7 @@ const handleSubmit = async (e) => {
 						
 						setTimeout(() => {
 								navigate('/success');
-						}, 10);
+						}, 800);
 				}
 
 		} catch (error) {
