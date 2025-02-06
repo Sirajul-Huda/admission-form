@@ -1,5 +1,5 @@
 import React from 'react'
-import intro from '../Assets/study.svg'
+import intro from '../Assets/studyy.jpeg'
 import { Link } from 'react-router'
 import logo from '../Assets/logo.svg'
 
