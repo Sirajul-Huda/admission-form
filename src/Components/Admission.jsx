@@ -3,8 +3,8 @@
 	import logo from '../Assets/logo.svg';
 
 	const AdmissionForm = () => {
-			const navigate = useNavigate();
-			const [searchParams, setSearchParams] = useSearchParams();
+		const navigate = useNavigate();
+    const [searchParams, setSearchParams] = useSearchParams();
 			
 			// State Management
 			const [selectedInstitution, setSelectedInstitution] = useState(null);
@@ -42,15 +42,14 @@
     };
 
     // Update URL with institution ID
-    const updateUrl = (institutionId) => {
-        const newUrl = `/#/admission?id=${institutionId}`;
-        // Using window.history to update the URL without triggering a re-render
-        window.history.replaceState(null, '', newUrl);
-    };
+    // const updateUrl = (institutionId) => {
+    //     const newUrl = `/#/admission?id=${institutionId}`;
+    //     window.history.replaceState(null, '', newUrl);
+    // };
 
 
 			// Institution and Standards Fetching
-			useEffect(() => {
+		  useEffect(() => {
         const fetchInstitutions = async () => {
             try {
                 const response = await fetch('https://api.sirajulhuda.com/api/v1/erp/admission/admission-open/institutions');
@@ -58,8 +57,8 @@
                 if (result.status === 200) {
                     setInstitutions(result.data);
 
-                    // Check for institution ID in hash params
-                    const institutionId = getInstitutionFromUrl();
+                    // Get institution ID from URL search params
+                    const institutionId = searchParams.get('id');
                     if (institutionId) {
                         const selectedInst = result.data.find(inst => inst.id === Number(institutionId));
                         if (selectedInst) {
@@ -76,7 +75,12 @@
         };
 
         fetchInstitutions();
-    }, []);
+    }, [searchParams]); // Add searchParams as a dependency
+
+    // Update URL using setSearchParams
+    const updateUrl = (institutionId) => {
+        setSearchParams({ id: institutionId });
+    };
 
 
 			// Fetch Standards for Selected Institution
@@ -178,6 +182,8 @@
 							[name]: value
 					}));
 			};
+
+			
 
 			// Handle Form Submission
 			const handleSubmit = async (e) => {
