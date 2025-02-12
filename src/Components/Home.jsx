@@ -14,9 +14,9 @@ const Home = () => {
 						<div className="dv-width">
 							<Link to='/admission' className='admission-btn btn'>Admisssion</Link>
 						</div>
-						<div className="dv-width">
+						{/* <div className="dv-width">
 							<Link to='/otr' className='otr-btn btn'>One Time Registration</Link>
-						</div>
+						</div> */}
 					</div>
 				</div>
 			</div>
