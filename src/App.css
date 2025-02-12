@@ -36,8 +36,9 @@ body{
   padding: 12px 20px !important;
   display: table !important;
   margin: auto !important;
-  border-radius: 15px !important;
+  border-radius: 10px !important;
   color: #fff !important;
+  width: 94% !important;
 }
 .container-admission{
 
@@ -97,13 +98,44 @@ body{
   padding-bottom: 20px;
   color: #245e80;
 }
-
-
-
-
-
-
-
+.button-box{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.otr-btn {
+  background-color: #4b0835 !important;
+  padding: 12px 20px !important;
+  display: table !important;
+  margin: auto !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  width: 94% !important;
+}
+.dv-width{
+  width: 100%;
+}
+.otr-form{
+  width: 740px;
+  margin: auto;
+  display: table;
+  background-color: rgba(142, 175, 185, 0.486);
+  padding: 15px 30px 15px 30px;
+  border-radius: 10px;
+}
+.text-otr{
+  text-align: center;
+  padding-bottom: 35px;
+  padding-top: 30px;
+}
+.top-main-box{
+  padding-top: 70px;
+  padding-bottom: 70px;
+}
+.btn-submit{
+  background-color: #065b83 !important;
+  color: #fff !important;
+}
 
 
 
@@ -323,4 +355,28 @@ body{
     font-weight: 400;
     font-size: 14px;
 }
+.button-box {
+  display: block;
+  }
+  .dv-width{
+    padding-bottom: 14px;
+  }
+  .otr-btn {
+    padding: 14px 20px !important;
+    border-radius: 8px !important;
+    width: 97% !important;
+  }
+  .admission-btn {
+    background-color: #065b83 !important;
+    padding: 14px 20px !important;
+    border-radius: 8px !important;
+    width: 97% !important;
+  }
+  .otr-form{
+    width: 90%;
+  }
+  .otr-form .form-control {
+    padding: 12px 15px !important;
+    margin-bottom: 4px !important;
+  }
 }

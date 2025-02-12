@@ -10,7 +10,14 @@ const Home = () => {
 				<div className="intro">
 					<img src={logo} className='logo-img' alt="" />
 					<img src={intro} className='intro-img' alt="" />
-					<Link to='/admission' className='admission-btn btn'>Admisssion</Link>
+					<div className="button-box">
+						<div className="dv-width">
+							<Link to='/admission' className='admission-btn btn'>Admisssion</Link>
+						</div>
+						<div className="dv-width">
+							<Link to='/otr' className='otr-btn btn'>One Time Registration</Link>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>
