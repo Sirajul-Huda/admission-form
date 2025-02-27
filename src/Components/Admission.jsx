@@ -14,6 +14,8 @@
 			const [institutions, setInstitutions] = useState([]);
 			const [loading, setLoading] = useState(true);
 			const [standards, setStandards] = useState([]);
+			const [yearId, setYearId] = useState(null);
+			const [institutionType, setInstitutionType] = useState(null);
 			const [selectedStandard, setSelectedStandard] = useState('');
 			const [alert, setAlert] = useState({ message: '', type: '' });
 			const [isSubmitting, setIsSubmitting] = useState(false);
@@ -115,6 +117,30 @@
 									const institutionFormDetails = res.data;
 									const institutionFormConfigs = institutionFormDetails.config;
 
+
+
+									// Extract year_id and type from form configs
+									const institutionTypeField = institutionFormConfigs.find(config => config.column_name === 'type');
+									const yearIdField = institutionFormConfigs.find(config => config.column_name === 'year_id');
+									
+									// Set the values in state
+									const typeValue = institutionTypeField ? institutionTypeField.default_value : null;
+									const yearValue = yearIdField ? yearIdField.default_value : null;
+									
+									setInstitutionType(typeValue);
+									setYearId(yearValue);
+									
+									console.log('Institution Type:', typeValue);
+									console.log('Year ID:', yearValue);
+
+
+
+
+
+
+
+
+
 									const fieldTypes = {
 											str: 'text', standard: 'text', school: 'text',
 											ration_card_type: 'text', yes_no: 'select',
@@ -170,6 +196,8 @@
         setFormFields([]);
         setAlert({ message: '', type: '' });
         setIsSubmitting(false);
+				setYearId(null);  // Reset yearId
+				setInstitutionType(null);
         // Reset URL to base hash path
         window.history.replaceState(null, '', '/#/admission');
     };
@@ -193,6 +221,8 @@
 				const submissionData = {
 						institution_id: selectedInstitution,
 						standard: selectedStandard,
+						year_id: yearId,
+						type: institutionType,
 						...formData
 				};
 
@@ -204,6 +234,8 @@
 								body: JSON.stringify({
 											'institution_id': submissionData.institution_id === null ? null : Number(submissionData.institution_id),
 											'standard_id': submissionData.standard === null ? null : Number(submissionData.standard),
+											'year_id': submissionData.year_id === null ? null : Number(submissionData.year_id),
+											'type': submissionData.type === null ? null : submissionData.type,
 											'mobile': submissionData.mobile,
 											'whats_app': submissionData.whats_app === null ? null : submissionData.whats_app,
 											'email': submissionData.email === null ? null : submissionData.email,
