@@ -69,6 +69,7 @@ const RegistrationForm = () => {
 			}));
 		}
 	};
+	
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		const newErrors = validateForm();
@@ -89,6 +90,8 @@ const RegistrationForm = () => {
 
 		if (Object.keys(newErrors).length === 0) {
 			try {
+				// Send the data to the API
+				console.log('Sending data to API:', JSON.stringify(formData));
 				const response = await fetch('https://api.sirajulhuda.com/api/v1/staff/otr/create', {
 					method: 'POST',
 					headers: {
@@ -115,23 +118,53 @@ const RegistrationForm = () => {
 
 				if (response.ok) {
 					const responseData = await response.json();
+					console.log('Response Data:', responseData);
 					setNotification({
 						type: 'success',
 						message: 'Registration successful!'
 					});
 					setFormData(initialFormState);
 				} else {
-					const errorData = await response.json();
+					// Updated error handling to show only the detail message
+					let errorMessage = 'Registration failed. Please try again.';
+					
+					try {
+						const errorData = await response.json();
+						console.log('Full API Error Response:', errorData);
+						
+						// Extract the detail message if it exists
+						if (errorData.detail) {
+							errorMessage = errorData.detail;
+						} else if (errorData.message) {
+							errorMessage = errorData.message;
+						} else if (errorData.error) {
+							errorMessage = errorData.error;
+						} else {
+							// If none of the common error fields exist, show the full response
+							errorMessage = JSON.stringify(errorData);
+						}
+					} catch (parseError) {
+						// If response is not JSON, show the raw text
+						try {
+							const textResponse = await response.text();
+							errorMessage = textResponse || `HTTP ${response.status}: ${response.statusText}`;
+							console.log('Raw API Error Response:', textResponse);
+						} catch (textError) {
+							errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+							console.log('Error reading response:', textError);
+						}
+					}
+					
 					setNotification({
 						type: 'danger',
-						message: errorData.message || 'Registration failed. Please try again.'
+						message: errorMessage
 					});
 				}
 			} catch (error) {
 				console.error('API Error:', error);
 				setNotification({
 					type: 'danger',
-					message: 'Network error occurred. Please try again.'
+					message: `Network error occurred: ${error.message}`
 				});
 			}
 		} else {
@@ -178,7 +211,6 @@ const RegistrationForm = () => {
 									value={formData.phone}
 									onChange={handleChange}
 									className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
-
 									required
 								/>
 								{errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
@@ -375,5 +407,4 @@ const RegistrationForm = () => {
 	);
 };
 
-
-export default RegistrationForm;	
+export default RegistrationForm;
