@@ -37,9 +37,7 @@ const RegistrationForm = () => {
 			newErrors.email = 'Enter a valid email address';
 		}
 
-		if (formData.aadhaar && !formData.aadhaar.match(/^\d{12}$/)) {
-			newErrors.aadhaar = 'Aadhaar should be 12 digits';
-		}
+		// Aadhaar validation removed
 
 		if (formData.pincode && !formData.pincode.match(/^\d{6}$/)) {
 			newErrors.pincode = 'Enter a valid 6-digit pincode';
